@@ -1,26 +1,526 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ------------------------------------------------------------------
+   AISON LABS — DESIGN SYSTEM
+   Clean, professional, readable. White ground, ink text, one accent.
+   ------------------------------------------------------------------ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-bg: var(--bg);
+  --color-soft: var(--bg-soft);
+  --color-fg: var(--fg);
+  --color-mute: var(--mute);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-panel: var(--panel);
+  --color-accent: var(--accent);
+  --color-ink: #0b0b0c;
+  --color-paper: #f4f3ef;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: light;
+  --accent: #ff4a1c;
+
+  --bg: #ffffff;
+  --bg-soft: #f2f2f2;
+  --fg: #0c0c0d;
+  --mute: #5d5c58;
+  --line: rgba(12, 12, 13, 0.1);
+  --line-strong: rgba(12, 12, 13, 0.22);
+  --panel: #ffffff;
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --max: 96rem;
+  --nav-h: 4.5rem;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0b0c;
+  --bg-soft: #131315;
+  --fg: #f4f3ef;
+  --mute: #9b9a95;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.26);
+  --panel: #151517;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 1rem);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11", "calt";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* In the base layer so utility classes (bg-accent, bg-black) can override it */
+@layer base {
+  section,
+  .theme-scope,
+  [data-theme] {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+}
+.tone-soft {
+  background: var(--bg-soft);
+}
+
+/* Component classes live in a layer so Tailwind utilities can override them. */
+@layer components {
+/* --------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------- */
+.h-display {
+  font-size: clamp(2.75rem, 7.1vw, 7.25rem);
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.h1 {
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.h2 {
+  font-size: clamp(2rem, 3.8vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+.h3 {
+  font-size: 1.375rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.lead {
+  font-size: clamp(1.125rem, 1.45vw, 1.375rem);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--mute);
+  text-wrap: pretty;
+}
+.body {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.small {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+.eyebrow {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+.eyebrow::before {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  margin-bottom: 1rem;
+  background: var(--accent);
+}
+.kicker {
+  font-size: 0.75rem;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.label {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--mute);
+}
+
+/* Legacy scale, still used by the admin */
+.t-display-s {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+.t-h {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.018em;
+  font-weight: 600;
+}
+.t-lead {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+.t-body {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.t-small {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------- */
+.container-x {
+  width: 100%;
+  max-width: var(--max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+.card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+/* Pointer spotlight: --mx / --my are set by the Interactions layer */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 13%, transparent), transparent 62%);
+}
+.card:hover::before {
+  opacity: 1;
+}
+a.card:active,
+button.card:active {
+  transform: scale(0.985);
+}
+[data-tilt] {
+  transition: transform 0.25s ease-out;
+  will-change: transform;
+}
+[data-magnetic] {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pop-in {
+  animation: pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-space {
+  background: #02030a;
+}
+.hero-fade-left {
+  background: linear-gradient(90deg, rgba(2, 3, 10, 0.88) 0%, rgba(2, 3, 10, 0.55) 38%, rgba(2, 3, 10, 0) 70%);
+}
+.hero-fade-bottom {
+  background: linear-gradient(180deg, rgba(2, 3, 10, 0) 0%, rgba(2, 3, 10, 0.9) 100%);
+}
+@media (max-width: 1023px) {
+  .hero-fade-left {
+    background: linear-gradient(180deg, rgba(2, 3, 10, 0) 18%, rgba(2, 3, 10, 0.78) 58%, rgba(2, 3, 10, 0.92) 100%);
+  }
+}
+.card-hover {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+.card-hover:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 14px 36px -18px rgba(12, 12, 13, 0.32);
+  transform: translateY(-3px);
+}
+
+}
+
+/* --------------------------------------------------------------
+   Motion: one quiet reveal
+   -------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 2.4s var(--ease-out-expo) infinite;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------
+   Form fields (public site)
+   -------------------------------------------------------------- */
+.input {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--fg);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.input::placeholder {
+  color: color-mix(in srgb, var(--mute) 75%, transparent);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--fg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--fg) 10%, transparent);
+}
+
+/* Utility */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+.text-balance {
+  text-wrap: balance;
+}
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------
+   Prose (markdown content: blog, research, careers)
+   -------------------------------------------------------------- */
+.prose {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--fg) 88%, transparent);
+}
+.prose > * + * {
+  margin-top: 1.25rem;
+}
+.prose p,
+.prose li {
+  text-wrap: pretty;
+}
+.prose h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+  font-weight: 600;
+  color: var(--fg);
+  margin-top: 2.5rem;
+}
+.prose h3 {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  margin-top: 2rem;
+}
+.prose a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+  color: var(--fg);
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li::marker {
+  color: var(--mute);
+}
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: color-mix(in srgb, var(--fg) 7%, transparent);
+  padding: 0.12em 0.4em;
+  border-radius: 5px;
+}
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  background: var(--bg-soft);
+}
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+.prose img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: var(--line);
+  margin: 2.5rem 0;
+}
+.prose strong {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* --------------------------------------------------------------
+   Admin
+   -------------------------------------------------------------- */
+.admin-input {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--fg);
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  border-radius: 0;
+  transition: border-color 0.2s;
+}
+.admin-input:focus {
+  border-color: var(--fg);
+  outline: none;
+}
+.admin-input::placeholder {
+  color: var(--mute);
+}
+select.admin-input {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--mute) 50%), linear-gradient(135deg, var(--mute) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2.25rem;
+}
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table th {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--line-strong);
+  font-weight: 500;
+}
+.admin-table td {
+  padding: 0.8rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-size: 0.9375rem;
+}
+.admin-table tr:hover td {
+  background: color-mix(in srgb, var(--fg) 3%, transparent);
 }

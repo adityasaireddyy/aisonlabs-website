@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# visual verification output
+.visual/
+
+# local sqlite database
+/db/
