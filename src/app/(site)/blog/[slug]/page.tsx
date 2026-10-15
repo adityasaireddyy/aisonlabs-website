@@ -8,7 +8,7 @@ import PostCard from "@/components/blog/PostCard";
 import Section, { SectionHeader } from "@/components/ui/Section";
 import CTA from "@/components/sections/CTA";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export async function generateMetadata(props: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;

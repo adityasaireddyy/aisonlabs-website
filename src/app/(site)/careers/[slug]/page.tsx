@@ -10,7 +10,7 @@ import Reveal from "@/components/ui/Reveal";
 import ArticleBody from "@/components/research/ArticleBody";
 import ApplicationForm from "@/components/careers/ApplicationForm";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export async function generateMetadata(props: PageProps<"/careers/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;

@@ -59,6 +59,28 @@ import {
   Boxes,
   Route,
   Check,
+  PanelsTopLeft,
+  UserSearch,
+  ShoppingCart,
+  FileCheck,
+  MessageSquareHeart,
+  CreditCard,
+  QrCode,
+  Calculator,
+  Landmark,
+  Fingerprint,
+  IdCard,
+  Utensils,
+  MonitorPlay,
+  UserPlus,
+  ClipboardList,
+  Award,
+  Briefcase,
+  HeartPulse,
+  CalendarDays,
+  BellRing,
+  Plug,
+  Blocks,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -68,7 +90,7 @@ export const ICONS = {
   FileSpreadsheet, FileText, FlaskConical, Globe, GraduationCap, Hammer, Handshake, HeartHandshake, LifeBuoy, Layers, Layers3, Library, Mail,
   MapPin, Megaphone, MessageSquare, MessagesSquare, Network, NotebookPen, Package, Phone, Radio, Receipt, RefreshCw, Repeat, Rocket, School,
   Search, Settings2, ShieldCheck, SlidersHorizontal, Smartphone, Sparkles, Store, Target, Telescope, UserCog, Users, Wallet, Workflow, Zap, Clock,
-  Boxes, Route, Check,
+  Boxes, Route, Check, CreditCard, QrCode, Calculator, Landmark, Fingerprint, IdCard, Utensils, MonitorPlay, UserPlus, ClipboardList, Award, Briefcase, HeartPulse, CalendarDays, BellRing, Plug, Blocks, PanelsTopLeft, UserSearch, ShoppingCart, FileCheck, MessageSquareHeart,
 } satisfies Record<string, LucideIcon>;
 
 export type IconName = keyof typeof ICONS;

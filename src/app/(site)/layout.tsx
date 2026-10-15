@@ -6,7 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { SiteSettingsProvider } from "@/components/layout/SiteSettings";
 import Interactions from "@/components/ui/Interactions";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 /** Marketing site shell: header, main, footer. */
 export default async function SiteLayout({ children }: { children: ReactNode }) {

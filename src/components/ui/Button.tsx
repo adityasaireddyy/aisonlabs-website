@@ -41,7 +41,6 @@ const variants: Record<Variant, string> = {
  * "link" is text with a small boxed accent arrow, as used for See what we do.
  */
 export default function Button({ children, href, variant = "primary", size = "md", arrow = false, className, type = "button", ...rest }: Props) {
-  const magnetic = variant !== "link" && size === "lg" ? { "data-magnetic": "" } : {};
   const cls = cn(base, "active:scale-[0.98]", variant !== "link" && sizes[size], variants[variant], className);
   const showBox = variant === "link";
   const inner = (
@@ -61,19 +60,19 @@ export default function Button({ children, href, variant = "primary", size = "md
     const external = href.startsWith("http") || href.startsWith("mailto:");
     if (external) {
       return (
-        <a href={href} className={cls} {...magnetic} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
+        <a href={href} className={cls} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
           {inner}
         </a>
       );
     }
     return (
-      <Link href={href} className={cls} {...magnetic} onClick={rest.onClick as unknown as React.MouseEventHandler<HTMLAnchorElement> | undefined}>
+      <Link href={href} className={cls} onClick={rest.onClick as unknown as React.MouseEventHandler<HTMLAnchorElement> | undefined}>
         {inner}
       </Link>
     );
   }
   return (
-    <button type={type} className={cls} {...magnetic} {...rest}>
+    <button type={type} className={cls} {...rest}>
       {inner}
     </button>
   );

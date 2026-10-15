@@ -8,7 +8,6 @@ import { ArrowIcon } from "@/components/ui/Button";
  * components stay declarative:
  *  - `.card`            pointer spotlight (sets --mx / --my)
  *  - `[data-tilt]`      3D tilt toward the pointer
- *  - `[data-magnetic]`  pulls toward the pointer within a radius
  * It also renders the scroll-progress line and the back-to-top button.
  * Fine pointers only for the pointer effects; reduced motion disables them.
  */
@@ -80,21 +79,6 @@ export default function Interactions() {
         t.style.transform = `perspective(1100px) rotateX(${(-ny * max).toFixed(2)}deg) rotateY(${(nx * max).toFixed(2)}deg) translateZ(0)`;
         tilted = t;
       }
-
-      // magnetic
-      document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((m) => {
-        const r = m.getBoundingClientRect();
-        const mx = r.left + r.width / 2;
-        const my = r.top + r.height / 2;
-        const dx = e.clientX - mx;
-        const dy = e.clientY - my;
-        const reach = Math.max(r.width, r.height) * 0.9 + 40;
-        if (Math.hypot(dx, dy) < reach) {
-          m.style.transform = `translate(${(dx * 0.22).toFixed(1)}px, ${(dy * 0.28).toFixed(1)}px)`;
-        } else if (m.style.transform) {
-          m.style.transform = "";
-        }
-      });
     };
 
     const onMove = (e: PointerEvent) => {
@@ -103,7 +87,6 @@ export default function Interactions() {
     };
     const onLeave = () => {
       resetTilt();
-      document.querySelectorAll<HTMLElement>("[data-magnetic]").forEach((m) => (m.style.transform = ""));
     };
 
     document.addEventListener("pointermove", onMove, { passive: true });

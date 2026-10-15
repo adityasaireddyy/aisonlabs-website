@@ -8,7 +8,7 @@ import ResearchCard from "@/components/research/ResearchCard";
 import Section, { SectionHeader } from "@/components/ui/Section";
 import CTA from "@/components/sections/CTA";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export async function generateMetadata(props: PageProps<"/research/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;

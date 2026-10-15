@@ -1,5 +1,4 @@
 import type { IconName } from "@/components/ui/Icon";
-import { eduDashboard, eduScreens, eduTransport, type EduScreen } from "@/data/products";
 
 /** Icon choices for content that lives in other data files, keyed by index, name or id. */
 
@@ -37,24 +36,3 @@ export const categoryIcon = (c: string): IconName => CATEGORY[c] ?? "Compass";
 
 const ROLE: Record<string, IconName> = { Parents: "HeartHandshake", Teachers: "NotebookPen", "Hostel wardens": "Bed", Attenders: "UserCog", "Bus drivers": "Bus" };
 export const roleIcon = (r: string): IconName => ROLE[r] ?? "Users";
-
-/**
- * Real product screens for individual modules. Modules without an entry have no
- * safe screen (the lists show people), so they fall back to the group view.
- */
-const find = (id: string): EduScreen => eduScreens.find((s) => s.id === id)!;
-export const MODULE_SCREEN: Record<string, EduScreen> = {
-  Inventory: find("inventory"),
-  Library: find("library"),
-  Transport: find("transport"),
-  "Live buses": { id: "route-map", label: "Route map", ...eduTransport.map },
-  "Daily collections": find("collections"),
-  Reports: find("reports"),
-  "AI assistant": find("assistant"),
-};
-export const GROUP_SCREEN: Record<string, EduScreen> = {
-  academics: eduDashboard,
-  finance: find("collections"),
-  operations: find("inventory"),
-  insight: find("reports"),
-};

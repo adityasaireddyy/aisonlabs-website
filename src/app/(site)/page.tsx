@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { site } from "@/data/site";
-import { aisonEdu, eduDashboard, eduMobile, eduModuleGroups } from "@/data/products";
+import { aisonEdu, eduModuleGroups } from "@/data/products";
 import { services } from "@/data/services";
 import { principles } from "@/data/philosophy";
 import { formatDate } from "@/lib/markdown";
@@ -12,7 +11,7 @@ import Section, { SectionHeader } from "@/components/ui/Section";
 import Button, { ArrowIcon } from "@/components/ui/Button";
 import Reveal from "@/components/ui/Reveal";
 import StatusBadge from "@/components/ui/StatusBadge";
-import EduShot from "@/components/product/EduShot";
+import { eduCounts, eduHighlights } from "@/data/edu-features";
 import VisionMission from "@/components/sections/VisionMission";
 import CTA from "@/components/sections/CTA";
 import Icon, { IconBox, type IconName } from "@/components/ui/Icon";
@@ -23,7 +22,7 @@ import PrincipleList from "@/components/home/PrincipleList";
 import CardArt from "@/components/home/CardArt";
 import { cn } from "@/lib/utils";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = buildMetadata({
   title: site.tagline,
@@ -59,7 +58,6 @@ function Tile({ href, kicker, title, tone, icon, children, delay = 0 }: { href: 
 export default async function HomePage() {
   const [articles, clients] = await Promise.all([listArticles({ status: "published", limit: 4 }), listClientViews()]);
   const [a1, a2] = articles;
-  const phone = eduMobile.screens.find((s) => s.id === "home") ?? eduMobile.screens[0];
 
   return (
     <>
@@ -129,9 +127,16 @@ export default async function HomePage() {
             </Tile>
           )}
           <Tile href="/products/aison-edu#mobile" kicker="Mobile app" title="A mobile app for parents, teachers, hostel wardens and attenders" tone="dark" icon="Smartphone" delay={180}>
-            <div className="-mx-6 -mb-6 overflow-hidden">
-              <Image src={phone.src} alt="" width={phone.width} height={phone.height} sizes="(min-width: 1024px) 24vw, 80vw" className="mx-auto h-[19rem] w-auto max-w-none translate-y-8 object-cover object-top transition-transform duration-500 group-hover:translate-y-3" />
-            </div>
+            <ul className="grid grid-cols-3 gap-2">
+              {(["HeartHandshake", "NotebookPen", "Bed", "UserCog", "Bus"] as IconName[]).map((ic) => (
+                <li key={ic} className="grid aspect-square place-items-center border border-white/25 transition-colors duration-200 group-hover:border-accent group-hover:text-accent">
+                  <Icon name={ic} size={28} strokeWidth={1.4} />
+                </li>
+              ))}
+              <li className="grid aspect-square place-items-center bg-accent text-white">
+                <Icon name="Smartphone" size={28} strokeWidth={1.4} />
+              </li>
+            </ul>
           </Tile>
         </div>
 
@@ -153,7 +158,29 @@ export default async function HomePage() {
       <section data-theme="dark" className="border-t border-line py-[clamp(4rem,9vw,8rem)]" id="product">
         <div className="container-x grid items-center gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
           <Reveal>
-            <EduShot screen={eduDashboard} priority caption="The Aison Edu V2 dashboard, shown with sample data." />
+            <div className="grid grid-cols-3 gap-px bg-line">
+              {[
+                { n: eduCounts.modules, l: "modules" },
+                { n: eduCounts.areas, l: "areas" },
+                { n: eduCounts.roles, l: "mobile roles" },
+              ].map((x) => (
+                <div key={x.l} className="bg-bg px-4 py-6">
+                  <p className="text-[clamp(2.25rem,4.5vw,3.75rem)] font-semibold leading-none tracking-[-0.04em] text-accent">{x.n}</p>
+                  <p className="label mt-2">{x.l}</p>
+                </div>
+              ))}
+            </div>
+            <ul className="mt-px grid gap-px bg-line sm:grid-cols-2">
+              {eduHighlights.slice(0, 4).map((h) => (
+                <li key={h.title} className="group flex gap-4 bg-bg p-5 transition-colors duration-200 hover:bg-fg/[0.06]">
+                  <IconBox name={h.icon} tone="line" size="sm" className="group-hover:border-accent group-hover:text-accent" />
+                  <div>
+                    <p className="text-[1rem] font-semibold leading-snug tracking-[-0.015em]">{h.title}</p>
+                    <p className="small mt-1 text-mute">{h.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </Reveal>
           <Reveal delay={100}>
             <div className="mb-5 flex flex-wrap items-center gap-4">
@@ -166,14 +193,6 @@ export default async function HomePage() {
               <span className="text-mute">Deployed with </span>
               <span className="font-semibold">{aisonEdu.deployments.map((d) => d.name).join(", ")}</span>
             </p>
-            <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {([["Layers3", "Web platform"], ["Smartphone", "Mobile app"], ["Bus", "Live bus map"], ["Bot", "AI assistant"]] as [IconName, string][]).map(([ic, label]) => (
-                <li key={label} className="flex flex-col items-start gap-3 border border-line p-4 transition-colors duration-200 hover:border-fg">
-                  <Icon name={ic} size={26} strokeWidth={1.5} className="text-accent" />
-                  <span className="text-[14px] font-semibold leading-tight">{label}</span>
-                </li>
-              ))}
-            </ul>
             <div className="mt-8">
               <Button href="/products/aison-edu" variant="link">
                 Explore Aison Edu
@@ -185,7 +204,7 @@ export default async function HomePage() {
 
       {/* Modules */}
       <Section padding="lg">
-        <SectionHeader eyebrow="Inside Aison Edu" title="One system for the whole institution." lead="Academics, people, finance, campus operations and communication, working from the same records. Pick a group to see its modules." />
+        <SectionHeader eyebrow="Inside Aison Edu" title="One system for the whole institution." lead="Academics, people, finance, campus operations and communication, working from the same records. Pick an area to see its modules." />
         <Reveal>
           <ModuleExplorer groups={eduModuleGroups} />
         </Reveal>

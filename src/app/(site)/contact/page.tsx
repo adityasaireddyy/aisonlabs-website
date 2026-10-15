@@ -8,7 +8,7 @@ import Reveal from "@/components/ui/Reveal";
 import ContactForm from "@/components/forms/ContactForm";
 import { IconBox, type IconName } from "@/components/ui/Icon";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact",

@@ -6,7 +6,7 @@ import Section from "@/components/ui/Section";
 import ResearchList from "@/components/research/ResearchList";
 import CTA from "@/components/sections/CTA";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = buildMetadata({
   title: "Research",

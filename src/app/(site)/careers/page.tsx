@@ -11,7 +11,7 @@ import ApplicationForm from "@/components/careers/ApplicationForm";
 import { IconBox } from "@/components/ui/Icon";
 import { principleIcon } from "@/data/icons";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = buildMetadata({
   title: "Careers",

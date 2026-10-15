@@ -109,24 +109,15 @@ npm run e2e:admin       # sign in, create a post and a role, submit both public 
 
 Any Node host works. For serverless platforms use a hosted libsql database (`DATABASE_URL=libsql://…`), set `AUTH_SECRET`, and set `ADMIN_EMAIL` / `ADMIN_PASSWORD` before the first request so the seeded admin is yours.
 
-## Product screenshots
+## Aison Edu content
 
-The Aison Edu screens in `public/edu/` are captured from a running Aison Edu instance:
-
-```bash
-EDU_URL=http://localhost:3000 EDU_USER=<admin email> EDU_PASS=<password> \
-  node scripts/edu-capture.mjs public/edu 2 /=dashboard@470 /inventory /library /transport /collections /reports /assistant
-```
-
-Capture only screens without personal details. Student, guardian, staff and message lists are deliberately not used on the public site. The module list and screenshot registry live in `src/data/products.ts`.
-
-After re-capturing, delete `.next/cache/images` (and `.next/dev/cache/images` while `next dev` is running), otherwise the image optimizer keeps serving the previous files under the same names.
+The site shows no product screenshots. Aison Edu is presented through its features: module list and descriptions (`src/data/products.ts`, `src/data/edu-features.ts`), role summaries, transport and mobile app copy. Describe only what the product does; do not add outcomes or customer numbers. The route graphic is a drawn illustration (`RouteDiagram`), not a product screen.
 
 ## Interaction layer
 
 - **Galaxy hero** (`src/components/home/Galaxy.tsx`): canvas spiral galaxy. Pointer parallax and tilt, drag to spin with inertia, click for a shockwave, scroll pulls it closer. Pauses off-screen, thins out on small screens, and draws one still frame under reduced motion.
-- **`Interactions`** (`src/components/ui/Interactions.tsx`): delegated effects for the whole site. `.card` gets a pointer spotlight, `[data-tilt]` tilts toward the pointer, `[data-magnetic]` (all large buttons) pulls toward it. Also renders the scroll-progress line and back-to-top button.
-- **Explorers:** `ModuleExplorer` (module tabs, arrow keys), `PrincipleList` (accordion), `PhoneStack` (parent app screens), `EduGallery` (screen tabs).
+- **`Interactions`** (`src/components/ui/Interactions.tsx`): delegated effects for the whole site. `.card` gets a pointer spotlight, `[data-tilt]` tilts toward the pointer. Buttons stay still. Also renders the scroll-progress line and back-to-top button.
+- **Explorers:** `ModuleExplorer` (module tabs, arrow keys), `PrincipleList` (accordion), module tiles with icons and descriptions.
 
 ## Visual language (enterprise style)
 
@@ -137,5 +128,3 @@ Modelled on the feel of large consulting-firm sites: black-dominant, flat and sq
 - **Home** (`app/(site)/page.tsx`): galaxy hero with a three-line uppercase headline and a right-hand text column, two rows of tall editorial `Tile` cards, a product feature block, staggered colour tiles, a service index, principles, research list and a full-bleed accent call to action.
 - **Inner pages**: a black `PageHeader` (heading left, short accented text right) over white and light-grey sections.
 - **Layer note:** the base `section` / `[data-theme]` background rule lives in `@layer base`, so utilities such as `bg-accent` can override it.
-
-The route map (`public/edu/route-map.png`) is the map element from Transport, Routes, Manage, Edit pins on the map. Capture it with the same login, wait about eight seconds for the tiles, and screenshot `.mapboxgl-map` only, so no names or contact details are included. The Live buses view needs a driver to start a trip, so it has not been captured; it is described from how the product behaves.

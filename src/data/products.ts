@@ -94,29 +94,9 @@ export const eduModuleGroups: EduModuleGroup[] = [
   },
 ];
 
-export type EduScreen = { id: string; label: string; src: string; width: number; height: number; alt: string };
-
-/**
- * Screens captured from Aison Edu V2 with sample data (scripts/edu-capture.mjs).
- * Only screens without personal details are used on the public site.
- */
-export const eduScreens: EduScreen[] = [
-  { id: "inventory", label: "Inventory", src: "/edu/inventory.png", width: 2880, height: 1800, alt: "Aison Edu inventory: stock value, low-stock count and the item ledger" },
-  { id: "library", label: "Library", src: "/edu/library.png", width: 2880, height: 1800, alt: "Aison Edu library: books, copies, issued and overdue, with issue and return" },
-  { id: "transport", label: "Transport", src: "/edu/transport.png", width: 2880, height: 1800, alt: "Aison Edu transport: buses, routes, seats and student assignment" },
-  { id: "collections", label: "Daily collections", src: "/edu/collections.png", width: 2880, height: 1800, alt: "Aison Edu daily collections: money taken by method, fee head, class and collector" },
-  { id: "reports", label: "Reports", src: "/edu/reports.png", width: 2880, height: 1800, alt: "Aison Edu reports grouped by area, each downloadable as PDF and spreadsheet" },
-  { id: "assistant", label: "Assistant", src: "/edu/assistant.png", width: 2880, height: 1800, alt: "Aison Edu assistant answering questions from the school's own records" },
-];
-
-export const eduDashboard: EduScreen = { id: "dashboard", label: "Dashboard", src: "/edu/dashboard.png", width: 2880, height: 2080, alt: "Aison Edu dashboard: students, teachers, guardians, collections, fees outstanding, registers, documents, examinations, the income report and fee overview" };
-
-export const eduBanner = { src: "/edu/v2-banner.webp", width: 2000, height: 876, alt: "Aison Edu V2 by Aison Labs" };
-
 /**
  * Aison Edu V2 mobile app. Available for every role except administration,
- * which stays on the web. Screens are from the parent app with demo data;
- * profile and message screens are not used because they show contact details.
+ * which stays on the web.
  */
 export const eduMobile = {
   released: true,
@@ -124,28 +104,16 @@ export const eduMobile = {
   body: "Aison Edu V2 comes with a mobile app for the people who use the system away from a desk. Administration stays on the web, where the full system is managed.",
   roles: ["Parents", "Teachers", "Hostel wardens", "Attenders", "Bus drivers"],
   parentFeatures: ["Where the bus is", "Attendance", "Timetable", "Results", "Fees", "Stationery account", "Library", "Transport", "Hostel", "Marks memo", "Documents", "Notices", "Messages to teachers", "Assistant"],
-  screens: [
-    { id: "children", label: "Children", src: "/edu/mobile-parent-children.png", width: 720, height: 1600, alt: "Aison Edu parent app: a child's day, with attendance, timetable, results, fees and stationery account" },
-    { id: "home", label: "Home", src: "/edu/mobile-parent-home.png", width: 720, height: 1600, alt: "Aison Edu parent app home: attendance, fees due, quick actions and the latest notice" },
-    { id: "menu", label: "Menu", src: "/edu/mobile-parent-menu.png", width: 720, height: 1600, alt: "Aison Edu parent app menu: attendance, timetable, results, fees, library, transport, hostel, documents, notices and assistant" },
-  ],
 };
 
 /**
  * Bus routes and live maps. Described from what the product does: routes are
  * placed on a Mapbox map with a road-following line; live buses appear while a
- * driver's trip is running. The map image is a real route from the product
- * (stop names are generic, no people shown).
+ * driver's trip is running.
  */
 export const eduTransport = {
   title: "Bus routes and live maps.",
   body: "Transport is part of the same system as everything else. Routes are drawn on a real map, and while a bus is on the road, the school office and families can see where it is.",
-  map: {
-    src: "/edu/route-map.png",
-    width: 1352,
-    height: 892,
-    alt: "Aison Edu route map: five numbered stops joined by a line that follows the roads",
-  },
   points: [
     { t: "Routes on the map", d: "Each route is a numbered set of stops, placed on the map and joined by a line that follows the roads. Drag a pin to move a stop, and the order is the order the bus makes them." },
     { t: "Live buses", d: "When a driver starts a trip, the bus appears on the live map. It leaves the map when the trip ends, and the view refreshes every ten seconds." },
@@ -184,6 +152,6 @@ export const eduModels: EduModel[] = [
     body:
       "Everything is customizable. Aison Labs works with the institution to understand its requirements, then reshapes the web system and the mobile app before deploying them around how the institution actually runs.",
     flow: ["Understand", "Reshape", "Customize", "Deploy"],
-    adapts: ["Workflows", "Interfaces", "Modules", "Roles and permissions", "Reports", "Integrations", "Mobile app", "Branding"],
+    adapts: ["Workflows", "Interfaces", "Modules", "Roles and permissions", "Reports", "Integrations", "Mobile app", "Branding", "Optional add-ons"],
   },
 ];

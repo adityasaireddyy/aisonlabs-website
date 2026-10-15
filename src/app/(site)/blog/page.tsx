@@ -8,7 +8,7 @@ import Reveal from "@/components/ui/Reveal";
 import PostCard from "@/components/blog/PostCard";
 import CTA from "@/components/sections/CTA";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = buildMetadata({
   title: "Blog",
