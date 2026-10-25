@@ -26,7 +26,14 @@ function revalidateSite() {
 /* ---------------- Auth ---------------- */
 
 export async function loginAction(_prev: ActionState, fd: FormData): Promise<ActionState> {
-  const res = await login(str(fd, "email", 200), String(fd.get("password") ?? ""));
+  let res: Awaited<ReturnType<typeof login>>;
+  try {
+    res = await login(str(fd, "email", 200), String(fd.get("password") ?? ""));
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "";
+    if (msg.includes("AUTH_SECRET")) return { error: "Server setup problem: AUTH_SECRET is not set (16+ characters) in this environment." };
+    return { error: "Server setup problem: the database could not be reached or is not set up. Check DATABASE_URL and DATABASE_AUTH_TOKEN." };
+  }
   if (!res.ok) return { error: res.error };
   const next = str(fd, "next", 300);
   redirect(next.startsWith("/admin") && !next.startsWith("/admin/login") ? next : "/admin");
